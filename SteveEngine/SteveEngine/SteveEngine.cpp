@@ -27,8 +27,8 @@ int main(int argc, char* argv[])
     SDL_Window* window = NULL;
     SDL_Renderer* renderer = NULL;
 
-    //SteveEngine::System system;
-    //system.Init();
+    SteveEngine::System system;
+    system.Init();
 
     int* leak = DBG_NEW int[4096];
 
@@ -58,8 +58,8 @@ int main(int argc, char* argv[])
                 if (event.key.keysym.sym == SDLK_k)
                 {
                     std::cout << "K pressed!\n";
-                    //system.ShowError(L"Do not press K!!!");
-                    //system.LogToErrorFile(L"Error: User pressed 'k'");
+                    system.ShowError(L"Do not press K!!!");
+                    system.LogToErrorFile(L"Error: User pressed 'k'");
                 }
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                 {
@@ -90,6 +90,6 @@ int main(int argc, char* argv[])
     SDL_DestroyWindow(window);
     SDL_Quit();
 
-    //system.Shutdown();
+    system.Shutdown();
     return 0;
 }
