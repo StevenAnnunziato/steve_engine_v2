@@ -36,7 +36,6 @@ void SteveEngine::System::LogToErrorFile(const SteveEngine::string& message)
     if (errorLogHandle == NULL)
         errorLogHandle = CreateFileW(L"GameErrors.txt", GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     
-    // write to the file
-    auto len = (message + L"\n").size() * sizeof(wchar_t);
+    auto len = (message + L"\n").size() * sizeof(SteveEngine::string::value_type);
     WriteFile(errorLogHandle, (message + L"\n").c_str(), len, NULL, NULL);
 }
