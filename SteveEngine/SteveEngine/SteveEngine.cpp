@@ -51,16 +51,26 @@ int main(int argc, char* argv[])
     return 0;
 }
 
+void handle_events(void* engine)
+{
+    Uint32 now = GetTicks();
+    if (now - ((EngineState*)engine)->frameStart >= 16)
+    {
+        frameStep(((EngineState*)engine));
+    }
+}
+
 void runMainLoop(EngineState* engine)
 {
+#ifdef __EMSCRIPTEN__
+    emscripten_set_main_loop_arg(handle_events, engine, 0, true);
+#else
+
     while (!engine->quit)
     {
-        Uint32 now = GetTicks();
-        if (now - engine->frameStart >= 16)
-        {
-            frameStep(engine);
-        }
+        handle_events(engine);
     }
+#endif
 }
 
 void frameStep(void* arg)
@@ -110,7 +120,7 @@ void frameStep(void* arg)
     SDL_SetRenderDrawColor(engine->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 
     SDL_RenderClear(engine->renderer);
-    SDL_SetRenderDrawColor(engine->renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(engine->renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderFillRect(engine->renderer, &r);
     SDL_RenderPresent(engine->renderer);
 }
