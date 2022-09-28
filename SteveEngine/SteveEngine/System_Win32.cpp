@@ -1,5 +1,8 @@
 #include "System_Win32.h"
 
+// defined as an extern in System_Win32.h
+HANDLE errorLogHandle;
+
 // default constructor
 SteveEngine::System::System()
 {

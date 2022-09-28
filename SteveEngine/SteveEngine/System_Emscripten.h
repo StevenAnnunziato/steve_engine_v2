@@ -4,4 +4,5 @@
 #include <Windows.h>
 #include "SDL2/SDL.h"
 
-// declare string constants ??
+// string constants for errors
+const SteveEngine::string ERROR_K(L"Don't press k!!");

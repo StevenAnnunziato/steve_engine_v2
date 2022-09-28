@@ -36,9 +36,6 @@ namespace SteveEngine
 		void ShowError(const SteveEngine::string& message);
 		void LogToErrorFile(const SteveEngine::string& message);
 
-	private:
-		HANDLE errorLogHandle;
-
 	};
 
 }
