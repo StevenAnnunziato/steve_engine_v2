@@ -6,6 +6,9 @@
 # Emscripten build files
 SteveEngine/build/
 
+# Game error log
+SteveEngine/SteveEngine/GameErrors.txt
+
 # User-specific files
 *.rsuser
 *.suo
