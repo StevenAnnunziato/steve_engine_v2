@@ -18,7 +18,7 @@ void SteveEngine::System::Shutdown()
 
 void SteveEngine::System::ShowError(const SteveEngine::string& message)
 {
-    SteveEngine::string alertCommand = "alert(\"" + ERROR_K + "\")";
+    SteveEngine::string alertCommand = "alert(\"" + message + "\")";
     emscripten_run_script(alertCommand.c_str());
 }
 void SteveEngine::System::LogToErrorFile(const SteveEngine::string& message)
