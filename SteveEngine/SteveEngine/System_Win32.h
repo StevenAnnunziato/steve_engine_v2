@@ -13,3 +13,4 @@ extern HANDLE errorLogHandle;
 
 // string constants for errors
 const SteveEngine::string ERROR_K(L"Don't press k!!");
+const SteveEngine::string ERROR_FAILED_INIT(L"Error: Failed to init the system console.");

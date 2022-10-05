@@ -18,7 +18,7 @@ void SteveEngine::System::Init()
     // init the console for debug output
     if (!AllocConsole())
     {
-        //SteveEngine::System::ShowError()
+        SteveEngine::System::ShowError(ERROR_FAILED_INIT);
         ExitProcess(1);
     }
 
