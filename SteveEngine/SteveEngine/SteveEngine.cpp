@@ -51,6 +51,8 @@ int main(int argc, char* argv[])
     return 0;
 }
 
+// handle_events:
+// Advances the game forward once the current frame is done.
 void handle_events(void* engine)
 {
     Uint32 now = GetTicks();
@@ -60,6 +62,8 @@ void handle_events(void* engine)
     }
 }
 
+// runMainLoop:
+// Runs the main loop with different parameters depending on platform.
 void runMainLoop(EngineState* engine)
 {
 #ifdef __EMSCRIPTEN__
@@ -73,6 +77,7 @@ void runMainLoop(EngineState* engine)
 #endif
 }
 
+// update state of the game
 void frameStep(void* arg)
 {
     EngineState* engine = (EngineState*)arg;

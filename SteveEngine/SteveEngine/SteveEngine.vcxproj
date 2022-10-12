@@ -130,13 +130,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ColliderColorChanger.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="RectangleCollider.cpp" />
+    <ClCompile Include="RectangleRenderer.cpp" />
     <ClCompile Include="SteveEngine.cpp" />
     <ClCompile Include="System_Win32.cpp" />
+    <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ColliderColorChanger.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="RectangleCollider.h" />
+    <ClInclude Include="RectangleRenderer.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="System_Common.h" />
     <ClInclude Include="System_Win32.h" />
+    <ClInclude Include="Transform.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
