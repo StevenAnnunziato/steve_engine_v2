@@ -15,6 +15,21 @@ Entity::Entity()
     colorChanger = nullptr;
 }
 
+Entity::~Entity()
+{
+    delete rectRenderer;
+    rectRenderer = nullptr;
+
+    delete rectCollider;
+    rectCollider = nullptr;
+
+    delete playerController;
+    playerController = nullptr;
+
+    delete colorChanger;
+    colorChanger = nullptr;
+}
+
 RectangleRenderer* Entity::CreateRenderer()
 {
     return nullptr;
@@ -33,4 +48,14 @@ PlayerController* Entity::CreatePlayerController()
 ColliderColorChanger* Entity::CreateColliderColorChanger()
 {
     return nullptr;
+}
+
+void Entity::SetPosition(Vector3 position)
+{
+    transform.position = position;
+}
+
+void Entity::SetPosition(float x, float y, float z)
+{
+    transform.position = Vector3(x, y, z);
 }

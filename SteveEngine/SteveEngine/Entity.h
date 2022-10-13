@@ -12,17 +12,24 @@ class Entity
 
 public:
     Entity();
+    ~Entity();
 
+    // Create components
     RectangleRenderer* CreateRenderer();
     RectangleCollider* CreateCollider();
     PlayerController* CreatePlayerController();
     ColliderColorChanger* CreateColliderColorChanger();
 
-    Transform GetTransform() { return transform; }
+    // Getters
+    Transform* GetTransform() { return &transform; }
     RectangleRenderer* GetRenderer() { return rectRenderer; }
     RectangleCollider* GetCollider() { return rectCollider; }
     PlayerController* GetPlayerController() { return playerController; }
     ColliderColorChanger* GetColorChanger() { return colorChanger; }
+
+    // Shortcuts for setting position
+    void SetPosition(Vector3 position);
+    void SetPosition(float x, float y, float z);
 
 protected:
     Transform transform;

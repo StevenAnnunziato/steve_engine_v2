@@ -41,8 +41,10 @@ int main(int argc, char* argv[])
     engine.frameStart = GetTicks();
     engine.system = &system;
 
+    // game is here
     runMainLoop(&engine);
 
+    // quit game
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -53,6 +55,7 @@ int main(int argc, char* argv[])
 
 // handle_events:
 // Advances the game forward once the current frame is done.
+// Handles game timing, then delegates to a more detailed frameStep function.
 void handle_events(void* engine)
 {
     Uint32 now = GetTicks();
@@ -63,7 +66,7 @@ void handle_events(void* engine)
 }
 
 // runMainLoop:
-// Runs the main loop with different parameters depending on platform.
+// Starts the main loop with different parameters depending on platform.
 void runMainLoop(EngineState* engine)
 {
 #ifdef __EMSCRIPTEN__
@@ -75,6 +78,27 @@ void runMainLoop(EngineState* engine)
         handle_events(engine);
     }
 #endif
+}
+
+// drawGame:
+// Renders the game.
+void drawGame(EngineState* engine)
+{
+    int x = (SDL_sinf(engine->frame / 100.0f) * 100.0f) + 200;
+
+    SDL_Rect r = {
+        0,
+        0,
+        50,
+        50
+    };
+
+    SDL_SetRenderDrawColor(engine->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+
+    SDL_RenderClear(engine->renderer);
+    SDL_SetRenderDrawColor(engine->renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderFillRect(engine->renderer, &r);
+    SDL_RenderPresent(engine->renderer);
 }
 
 // update state of the game
@@ -101,7 +125,6 @@ void frameStep(void* arg)
             {
                 std::cout << "K pressed!\n";
 
-                // TODO: Add calls to ErrorMessage and LogToErrorFile here
                 engine->system->ShowError(ERROR_K);
                 engine->system->LogToErrorFile(ERROR_K);
 
@@ -113,21 +136,7 @@ void frameStep(void* arg)
         }
     }
 
-    int x = (SDL_sinf(engine->frame / 100.0f) * 100.0f) + 200;
-
-    SDL_Rect r = {
-        x,
-        100,
-        50,
-        50
-    };
-
-    SDL_SetRenderDrawColor(engine->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-
-    SDL_RenderClear(engine->renderer);
-    SDL_SetRenderDrawColor(engine->renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderFillRect(engine->renderer, &r);
-    SDL_RenderPresent(engine->renderer);
+    drawGame(engine);
 }
 
 Uint32 GetTicks()
