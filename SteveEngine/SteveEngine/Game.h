@@ -1,8 +1,13 @@
 #pragma once
 
+#include <vector>
+
 #include "System.h"
+#include "Entity.h"
 
 class Vector2;
+class Vector3;
+class Color;
 
 struct EngineState
 {
@@ -21,12 +26,14 @@ public:
 	Game();
 	~Game();
 
+    // instance management for Game singleton
+    static Game* getInstance() { return spTheGame; }
+    static void initInstance();
+    static void cleanupInstance();
+
     // setup and cleanup
 	void initGame(const Vector2& size);
 	void cleanupGame();
-
-    // instance management
-
 
     // main loop functions
     void runMainLoop(EngineState* engine);
@@ -38,5 +45,6 @@ public:
 
 private:
     static Game* spTheGame;
+    std::vector<Entity*> gameEntities;
 };
 

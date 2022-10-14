@@ -7,6 +7,9 @@ class RectangleCollider;
 class PlayerController;
 class ColliderColorChanger;
 
+class Vector2;
+class Color;
+
 class Entity
 {
 
@@ -15,8 +18,8 @@ public:
     ~Entity();
 
     // Create components
-    RectangleRenderer* CreateRenderer();
-    RectangleCollider* CreateCollider();
+    RectangleRenderer* CreateRenderer(Vector2 size, Color color);
+    RectangleCollider* CreateCollider(float halfWidth, float halfHeight);
     PlayerController* CreatePlayerController();
     ColliderColorChanger* CreateColliderColorChanger();
 

@@ -6,14 +6,18 @@
 class RectangleCollider : public Component
 {
 public:
-	RectangleCollider(Vector2 topLeft, Vector2 bottomRight);
+	RectangleCollider(float halfWidth, float halfHeight);
+	RectangleCollider(Vector2 halfExtents);
 
 	// returns true if pOther is colliding with this collider
 	bool CheckCollision(RectangleCollider* pOther);
 
 private:
-	Vector2 topLeft;
-	Vector2 bottomRight;
+	float halfWidth;
+	float halfHeight;
+
+	Vector2 getTopLeft();
+	Vector2 getBottomRight();
 
 };
 

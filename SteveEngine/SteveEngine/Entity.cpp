@@ -1,5 +1,7 @@
 #include "Entity.h"
+#include "Utils.h"
 
+#include "Transform.h"
 #include "RectangleRenderer.h"
 #include "RectangleCollider.h"
 #include "PlayerController.h"
@@ -8,7 +10,8 @@
 Entity::Entity()
 {
 	// Initialize all components to nullptr
-    // transform = 
+    Transform myTransform(0, 0, 0);
+    transform = myTransform;
     rectRenderer = nullptr;
     rectCollider = nullptr;
     playerController = nullptr;
@@ -30,24 +33,28 @@ Entity::~Entity()
     colorChanger = nullptr;
 }
 
-RectangleRenderer* Entity::CreateRenderer()
+RectangleRenderer* Entity::CreateRenderer(Vector2 size, Color color)
 {
-    return nullptr;
+    rectRenderer = new RectangleRenderer(size, color);
+    return rectRenderer;
 }
 
-RectangleCollider* Entity::CreateCollider()
+RectangleCollider* Entity::CreateCollider(float halfWidth, float halfHeight)
 {
-    return nullptr;
+    rectCollider = new RectangleCollider(halfWidth, halfHeight);
+    return rectCollider;
 }
 
 PlayerController* Entity::CreatePlayerController()
 {
-    return nullptr;
+    playerController = new PlayerController();
+    return playerController;
 }
 
 ColliderColorChanger* Entity::CreateColliderColorChanger()
 {
-    return nullptr;
+    colorChanger = new ColliderColorChanger();
+    return colorChanger;
 }
 
 void Entity::SetPosition(Vector3 position)

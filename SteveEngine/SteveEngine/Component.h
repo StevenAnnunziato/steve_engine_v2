@@ -7,7 +7,7 @@ class Component
 public:
 	Entity* GetOwner() { return pOwner; }
 
-private:
+protected:
 	Entity* pOwner;
 
 };

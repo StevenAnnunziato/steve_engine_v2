@@ -4,6 +4,9 @@
 
 class PlayerController : public Component
 {
+public:
+	PlayerController();
 
+	void Update();
 };
 

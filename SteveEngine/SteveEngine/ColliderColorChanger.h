@@ -4,6 +4,10 @@
 
 class ColliderColorChanger : public Component
 {
+public:
+	ColliderColorChanger();
+
+	void Update();
 
 };
 
