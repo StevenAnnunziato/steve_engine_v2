@@ -6,8 +6,8 @@
 class RectangleCollider : public Component
 {
 public:
-	RectangleCollider(float halfWidth, float halfHeight);
-	RectangleCollider(Vector2 halfExtents);
+	RectangleCollider(Entity* pOwner, float halfWidth, float halfHeight);
+	RectangleCollider(Entity* pOwner, Vector2 halfExtents);
 
 	// returns true if pOther is colliding with this collider
 	bool CheckCollision(RectangleCollider* pOther);

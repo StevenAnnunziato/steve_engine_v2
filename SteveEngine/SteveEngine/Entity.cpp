@@ -10,8 +10,7 @@
 Entity::Entity()
 {
 	// Initialize all components to nullptr
-    Transform myTransform(0, 0, 0);
-    transform = myTransform;
+    transform = {0, 0, 0 };
     rectRenderer = nullptr;
     rectCollider = nullptr;
     playerController = nullptr;
@@ -35,25 +34,25 @@ Entity::~Entity()
 
 RectangleRenderer* Entity::CreateRenderer(Vector2 size, Color color)
 {
-    rectRenderer = new RectangleRenderer(size, color);
+    rectRenderer = new RectangleRenderer(this, size, color);
     return rectRenderer;
 }
 
 RectangleCollider* Entity::CreateCollider(float halfWidth, float halfHeight)
 {
-    rectCollider = new RectangleCollider(halfWidth, halfHeight);
+    rectCollider = new RectangleCollider(this, halfWidth, halfHeight);
     return rectCollider;
 }
 
 PlayerController* Entity::CreatePlayerController()
 {
-    playerController = new PlayerController();
+    playerController = new PlayerController(this);
     return playerController;
 }
 
 ColliderColorChanger* Entity::CreateColliderColorChanger()
 {
-    colorChanger = new ColliderColorChanger();
+    colorChanger = new ColliderColorChanger(this);
     return colorChanger;
 }
 

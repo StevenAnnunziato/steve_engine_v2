@@ -1,8 +1,10 @@
 #include "RectangleRenderer.h"
 #include "Utils.h"
 
-RectangleRenderer::RectangleRenderer(Vector2 size, Color color)
+RectangleRenderer::RectangleRenderer(Entity* pOwner, Vector2 size, Color color)
 {
+	this->pOwner = pOwner;
+
 	this->size = size;
 	this->color = color;
 }

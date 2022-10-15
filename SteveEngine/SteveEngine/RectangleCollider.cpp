@@ -2,14 +2,18 @@
 #include "Transform.h"
 #include "Entity.h"
 
-RectangleCollider::RectangleCollider(float halfWidth, float halfHeight)
+RectangleCollider::RectangleCollider(Entity* pOwner, float halfWidth, float halfHeight)
 {
+	this->pOwner = pOwner;
+
 	this->halfWidth = halfWidth;
 	this->halfHeight = halfHeight;
 }
 
-RectangleCollider::RectangleCollider(Vector2 halfExtents)
+RectangleCollider::RectangleCollider(Entity* pOwner, Vector2 halfExtents)
 {
+	this->pOwner = pOwner;
+
 	this->halfWidth = halfExtents.x;
 	this->halfHeight = halfExtents.y;
 }
@@ -26,13 +30,13 @@ bool RectangleCollider::CheckCollision(RectangleCollider* pOther)
 Vector2 RectangleCollider::getTopLeft()
 {
 	float x = pOwner->GetTransform()->position.x - halfWidth;
-	float y = pOwner->GetTransform()->position.y + halfHeight;
+	float y = pOwner->GetTransform()->position.y - halfHeight;
 	return Vector2(x, y);
 }
 
 Vector2 RectangleCollider::getBottomRight()
 {
 	float x = pOwner->GetTransform()->position.x + halfWidth;
-	float y = pOwner->GetTransform()->position.y - halfHeight;
+	float y = pOwner->GetTransform()->position.y + halfHeight;
 	return Vector2(x, y);
 }

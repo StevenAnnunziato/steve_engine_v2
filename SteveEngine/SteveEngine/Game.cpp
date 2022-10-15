@@ -158,7 +158,7 @@ void Game::updateGameState(void* arg)
 
         // update color changer
         if (gameEntities[i]->GetColorChanger() != nullptr)
-            gameEntities[i]->GetColorChanger()->Update();
+            gameEntities[i]->GetColorChanger()->Update(gameEntities[1]); // hard coded to check for the obstacle
     }
 
     // input for basic game functionality

@@ -7,10 +7,12 @@ class RectangleRenderer : public Component
 {
 
 public:
-	RectangleRenderer(Vector2 size, Color color);
+	RectangleRenderer(Entity* pOwner, Vector2 size, Color color);
 
 	Vector2 GetSize() { return size; }
 	Color GetColor() { return color; }
+
+	void SetColor(const Color& newColor) { color = newColor; }
 
 private:
 	Vector2 size;
