@@ -26,7 +26,7 @@ void Game::initGame(const Vector2& windowSize)
     SteveEngine::System system;
     system.Init();
 
-    int* leak = DBG_NEW int[4096];
+    //int* leak = DBG_NEW int[4096]; // this gets caught and displayed in the VS debug output
 
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -39,6 +39,9 @@ void Game::initGame(const Vector2& windowSize)
     engine.frame = 0;
     engine.frameStart = SDL_GetTicks();
     engine.system = &system;
+
+    // create game world
+    theWorld = World();
 
     // create game entities
     // TODO: abstract this

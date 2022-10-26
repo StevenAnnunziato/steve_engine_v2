@@ -7,6 +7,7 @@
 class PlayerController : public Component
 {
 public:
+	PlayerController();
 	PlayerController(Entity* pOwner);
 
 	void Update();

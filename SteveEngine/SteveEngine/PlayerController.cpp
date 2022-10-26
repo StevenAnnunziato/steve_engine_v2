@@ -3,6 +3,13 @@
 #include "PlayerController.h"
 #include "Transform.h"
 
+PlayerController::PlayerController()
+{
+	this->pOwner = nullptr;
+
+	KEY_STATE = SDL_GetKeyboardState(nullptr);
+}
+
 PlayerController::PlayerController(Entity* pOwner)
 {
 	this->pOwner = pOwner;

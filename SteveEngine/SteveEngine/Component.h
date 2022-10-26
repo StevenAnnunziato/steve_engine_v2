@@ -6,9 +6,8 @@ class Component
 {
 public:
 	Entity* GetOwner() { return pOwner; }
-
-	// TODO: set pOwner somewhere
-
+	void SetOwner(Entity* owner) { pOwner = owner; }
+	
 protected:
 	Entity* pOwner;
 

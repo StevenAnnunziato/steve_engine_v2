@@ -2,6 +2,13 @@
 #include "Transform.h"
 #include "Entity.h"
 
+RectangleCollider::RectangleCollider()
+{
+	pOwner = nullptr;
+	halfWidth = 0.0;
+	halfHeight = 0.0;
+}
+
 RectangleCollider::RectangleCollider(Entity* pOwner, float halfWidth, float halfHeight)
 {
 	this->pOwner = pOwner;
