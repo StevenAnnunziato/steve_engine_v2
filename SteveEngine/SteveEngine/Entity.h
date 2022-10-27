@@ -18,10 +18,10 @@ public:
     ~Entity();
 
     // Create components
-    RectangleRenderer* CreateRenderer(Vector2 size, Color color);
-    RectangleCollider* CreateCollider(float halfWidth, float halfHeight);
+    RectangleRenderer* CreateRenderer(const Vector2& size, const Color& color);
+    RectangleCollider* CreateCollider(const float& halfWidth, const float& halfHeight);
     PlayerController* CreatePlayerController();
-    ColliderColorChanger* CreateColliderColorChanger();
+    ColliderColorChanger* CreateColliderColorChanger(const Color& color);
 
     // Getters
     Transform* GetTransform() { return &transform; }

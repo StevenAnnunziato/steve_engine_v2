@@ -55,7 +55,7 @@ void Game::initGame(const Vector2& windowSize)
     player->CreateRenderer(playerSize, playerColor);
     player->CreateCollider(playerSize.x / 2.0, playerSize.y / 2.0);
     player->CreatePlayerController();
-    player->CreateColliderColorChanger();
+    player->CreateColliderColorChanger(Color(0, 127, 255));
     gameEntities.push_back(player); // keep track of it
 
     // obstacle

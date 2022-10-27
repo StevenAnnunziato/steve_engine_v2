@@ -7,6 +7,8 @@
 #include "PlayerController.h"
 #include "ColliderColorChanger.h"
 
+#include "Game.h"
+
 Entity::Entity()
 {
 	// Initialize all components to nullptr
@@ -32,27 +34,45 @@ Entity::~Entity()
     colorChanger = nullptr;
 }
 
-RectangleRenderer* Entity::CreateRenderer(Vector2 size, Color color)
+// Component creation - just get the next one preallocated from Game::World!
+
+// TODO: Transform
+
+RectangleRenderer* Entity::CreateRenderer(const Vector2& size, const Color& color)
 {
-    rectRenderer = new RectangleRenderer(this, size, color);
+    RectangleRenderer* rectRenderer = Game::getInstance()->getWorld()->GetNextRenderer();
+    rectRenderer->SetOwner(this);
+    rectRenderer->SetSize(size);
+    rectRenderer->SetColor(color);
+    this->rectRenderer = rectRenderer;
     return rectRenderer;
 }
 
-RectangleCollider* Entity::CreateCollider(float halfWidth, float halfHeight)
+RectangleCollider* Entity::CreateCollider(const float& halfWidth, const float& halfHeight)
 {
-    rectCollider = new RectangleCollider(this, halfWidth, halfHeight);
+    RectangleCollider* rectCollider = Game::getInstance()->getWorld()->GetNextCollider();
+    rectCollider->SetOwner(this);
+    rectCollider->SetHalfWidth(halfWidth);
+    rectCollider->SetHalfHeight(halfHeight);
+    this->rectCollider = rectCollider;
     return rectCollider;
 }
 
 PlayerController* Entity::CreatePlayerController()
 {
-    playerController = new PlayerController(this);
+    PlayerController* playerController = Game::getInstance()->getWorld()->GetNextController();
+    playerController->SetOwner(this);
+    this->playerController = playerController;
     return playerController;
 }
 
-ColliderColorChanger* Entity::CreateColliderColorChanger()
+ColliderColorChanger* Entity::CreateColliderColorChanger(const Color& color)
 {
-    colorChanger = new ColliderColorChanger(this);
+    ColliderColorChanger* colorChanger = Game::getInstance()->getWorld()->GetNextColorChanger();
+    colorChanger->SetOwner(this);
+    colorChanger->SetHitColor(color);
+    colorChanger->AutoSetBaseColor();
+    this->colorChanger = colorChanger;
     return colorChanger;
 }
 

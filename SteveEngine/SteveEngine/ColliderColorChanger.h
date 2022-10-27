@@ -7,7 +7,7 @@ class ColliderColorChanger : public Component
 {
 public:
 	ColliderColorChanger();
-	ColliderColorChanger(Entity* pOwner);
+	ColliderColorChanger(Entity* pOwner, const Color& color);
 
 	void SetBaseColor(const Color& col) { baseColor = col; }
 	void AutoSetBaseColor();

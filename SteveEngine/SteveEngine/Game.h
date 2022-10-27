@@ -28,31 +28,55 @@ struct World
 {
     World()
     {
-        numTransforms, numRenderers, numColliders, numControllers, numColorChangers = 0;
+        //numTransforms = 0;
+        numRenderers = 0;
+        numColliders = 0;
+        numControllers = 0;
+        numColorChangers = 0;
     }
 
     static const int MAX_OBJECTS = 128; // TODO: let the user specify this
 
     // contiguous storage for all components
-    Transform transform_array[MAX_OBJECTS];
+    //Transform transform_array[MAX_OBJECTS];
     RectangleRenderer renderer_array[MAX_OBJECTS];
     RectangleCollider collider_array[MAX_OBJECTS];
     PlayerController controller_array[MAX_OBJECTS];
     ColliderColorChanger colorchanger_array[MAX_OBJECTS];
 
     // counters for each component
-    short int numTransforms;
-    short int numRenderers;
-    short int numColliders;
-    short int numControllers;
-    short int numColorChangers;
+    //short int numTransforms;
+    int numRenderers;
+    int numColliders;
+    int numControllers;
+    int numColorChangers;
 
     // functions to return the next component
-    Transform* GetNextTransform() { return &transform_array[numTransforms++]; }
-    RectangleRenderer* GetNextRenderer() { return &renderer_array[numRenderers++]; }
-    RectangleCollider* GetNextCollider() { return &collider_array[numColliders++]; }
-    PlayerController* GetNextController() { return &controller_array[numControllers++]; }
-    ColliderColorChanger* GetNextColorChanger() { return &colorchanger_array[numColorChangers++]; }
+    //Transform* GetNextTransform() { return &transform_array[numTransforms++]; }
+    RectangleRenderer* GetNextRenderer() 
+    { 
+        if (numRenderers >= MAX_OBJECTS)
+            return nullptr;
+        return &renderer_array[numRenderers++]; 
+    }
+    RectangleCollider* GetNextCollider()
+    {
+        if (numColliders >= MAX_OBJECTS)
+            return nullptr;
+        return &collider_array[numColliders++];
+    }
+    PlayerController* GetNextController()
+    {
+        if (numControllers >= MAX_OBJECTS)
+            return nullptr;
+        return &controller_array[numControllers++];
+    }
+    ColliderColorChanger* GetNextColorChanger() 
+    { 
+        if (numColorChangers >= MAX_OBJECTS)
+            return nullptr;
+        return &colorchanger_array[numColorChangers++]; 
+    }
 };
 
 class Game
@@ -67,6 +91,7 @@ public:
     static Game* getInstance() { return spTheGame; }
     static void initInstance();
     static void cleanupInstance();
+    World* getWorld() { return &theWorld; }
 
     // setup and cleanup
 	void initGame(const Vector2& size);
