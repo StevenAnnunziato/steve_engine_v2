@@ -21,17 +21,7 @@ Entity::Entity()
 
 Entity::~Entity()
 {
-    delete rectRenderer;
-    rectRenderer = nullptr;
-
-    delete rectCollider;
-    rectCollider = nullptr;
-
-    delete playerController;
-    playerController = nullptr;
-
-    delete colorChanger;
-    colorChanger = nullptr;
+    // components are stored on the stack, so there is nothing to delete here
 }
 
 // Component creation - just get the next one preallocated from Game::World!

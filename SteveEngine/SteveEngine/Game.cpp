@@ -153,15 +153,14 @@ void Game::updateGameState(void* arg)
     // --------------------------------
 
     // update all components
-    for (int i = 0; i < gameEntities.size(); i++)
+    // Note: only player controllers and collider color changers have update functions right now.
+    for (int i = 0; i < getWorld()->numControllers; i++)
     {
-        // update player controller
-        if (gameEntities[i]->GetPlayerController() != nullptr)
-            gameEntities[i]->GetPlayerController()->Update();
-
-        // update color changer
-        if (gameEntities[i]->GetColorChanger() != nullptr)
-            gameEntities[i]->GetColorChanger()->Update(gameEntities[1]); // hard coded to check for the obstacle
+        getWorld()->controller_array[i].Update();
+    }
+    for (int i = 0; i < getWorld()->numControllers; i++)
+    {
+        getWorld()->colorchanger_array[i].Update(gameEntities[1]); // hard coded to check for the obstacle
     }
 
     // input for basic game functionality
