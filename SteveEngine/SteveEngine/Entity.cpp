@@ -26,7 +26,7 @@ Entity::~Entity()
 
 // Component creation - just get the next one preallocated from Game::World!
 
-// TODO: Transform
+// TODO:  either make CreateTransform or get rid of the commented Transform lines
 
 RectangleRenderer* Entity::CreateRenderer(const Vector2& size, const Color& color)
 {

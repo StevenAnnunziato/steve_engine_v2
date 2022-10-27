@@ -28,7 +28,6 @@ struct World
 {
     World()
     {
-        //numTransforms = 0;
         numRenderers = 0;
         numColliders = 0;
         numControllers = 0;
@@ -38,21 +37,18 @@ struct World
     static const int MAX_OBJECTS = 128; // TODO: let the user specify this
 
     // contiguous storage for all components
-    //Transform transform_array[MAX_OBJECTS];
     RectangleRenderer renderer_array[MAX_OBJECTS];
     RectangleCollider collider_array[MAX_OBJECTS];
     PlayerController controller_array[MAX_OBJECTS];
     ColliderColorChanger colorchanger_array[MAX_OBJECTS];
 
     // counters for each component
-    //short int numTransforms;
     int numRenderers;
     int numColliders;
     int numControllers;
     int numColorChangers;
 
     // functions to return the next component
-    //Transform* GetNextTransform() { return &transform_array[numTransforms++]; }
     RectangleRenderer* GetNextRenderer() 
     { 
         if (numRenderers >= MAX_OBJECTS)
