@@ -99,6 +99,7 @@ public:
 
     // updating game state
     void updateGameState(void* arg);
+    void updatePhysics(EngineState* engine);
     void renderGame(EngineState* engine);
 
 private:

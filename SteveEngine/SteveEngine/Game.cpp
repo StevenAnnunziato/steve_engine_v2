@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "Utils.h"
+#include "StackAllocator.h"
 
 #include "PlayerController.h"
 #include "ColliderColorChanger.h"
@@ -152,6 +153,9 @@ void Game::updateGameState(void* arg)
     engine->frameStart = now;
     // --------------------------------
 
+    // update physics
+    updatePhysics(engine);
+
     // update all components
     // Note: only player controllers and collider color changers have update functions right now.
     for (int i = 0; i < getWorld()->numControllers; i++)
@@ -187,6 +191,40 @@ void Game::updateGameState(void* arg)
             }
         }
     }
+}
+
+void Game::updatePhysics(EngineState* engine)
+{
+    int bufferSize = 1024 * 10; // 10 kb
+    StackAllocator stack(bufferSize);
+
+    RectangleCollider** colliderArray = (RectangleCollider**)stack.getHeadAddress(); // array of RectangleCollider pointers
+    // get an array of all colliders that are colliding with anything else
+    // NOTE: this might add objects several times, but this is just an example for now
+    int size = 0;
+    for (int i = 0; i < getWorld()->numColliders; i++)
+    {
+        for (int j = 0; j < getWorld()->numColliders; j++)
+        {
+            // are i and j colliding?
+            if (getWorld()->collider_array[i].CheckCollision(&getWorld()->collider_array[j]))
+            {
+                // colliding - allocate space on the stack allocator
+                colliderArray[size] = *stack.alloc<RectangleCollider*>();
+                colliderArray[size] = &getWorld()->collider_array[i];
+                size++;
+            }
+        }
+    }
+    
+    // do something with collider array!
+    for (int i = 0; i < size; i++)
+    {
+        std::cout << colliderArray[i]->GetOwner()->GetTransform()->position.x << std::endl;
+    }
+
+    // clear the stack allocator
+    stack.clear();
 }
 
 void Game::renderGame(EngineState* engine)
