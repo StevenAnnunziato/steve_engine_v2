@@ -2,7 +2,6 @@
 
 #include "Game.h"
 #include "Utils.h"
-#include "StackAllocator.h"
 
 #include "PlayerController.h"
 #include "ColliderColorChanger.h"
@@ -34,9 +33,13 @@ void Game::initGame(const Vector2& windowSize)
     window = SDL_CreateWindow("SDL2 Test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowSize.x, windowSize.y, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
+    int bufferSize = 1024 * 10; // 10 kb
+    StackAllocator stackAllocator(bufferSize);
+
     EngineState engine;
     engine.quit = false;
     engine.renderer = renderer;
+    engine.stackAllocator = &stackAllocator;
     engine.frame = 0;
     engine.frameStart = SDL_GetTicks();
     engine.system = &system;
@@ -138,6 +141,9 @@ void Game::handleTiming(void* engine)
     {
         updateGameState((EngineState*)engine);
         renderGame((EngineState*)engine);
+
+        // clear stack allocator
+        ((EngineState*)engine)->stackAllocator->clear();
     }
 }
 
@@ -195,10 +201,7 @@ void Game::updateGameState(void* arg)
 
 void Game::updatePhysics(EngineState* engine)
 {
-    int bufferSize = 1024 * 10; // 10 kb
-    StackAllocator stack(bufferSize);
-
-    RectangleCollider** colliderArray = (RectangleCollider**)stack.getHeadAddress(); // array of RectangleCollider pointers
+    RectangleCollider** colliderArray = (RectangleCollider**)engine->stackAllocator->getHeadAddress(); // array of RectangleCollider pointers
     // get an array of all colliders that are colliding with anything else
     // NOTE: this might add objects several times, but this is just an example for now
     int size = 0;
@@ -210,7 +213,7 @@ void Game::updatePhysics(EngineState* engine)
             if (getWorld()->collider_array[i].CheckCollision(&getWorld()->collider_array[j]))
             {
                 // colliding - allocate space on the stack allocator
-                colliderArray[size] = *stack.alloc<RectangleCollider*>();
+                colliderArray[size] = *engine->stackAllocator->alloc<RectangleCollider*>();
                 colliderArray[size] = &getWorld()->collider_array[i];
                 size++;
             }
@@ -222,9 +225,6 @@ void Game::updatePhysics(EngineState* engine)
     {
         std::cout << colliderArray[i]->GetOwner()->GetTransform()->position.x << std::endl;
     }
-
-    // clear the stack allocator
-    stack.clear();
 }
 
 void Game::renderGame(EngineState* engine)

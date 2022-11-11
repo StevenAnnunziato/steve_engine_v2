@@ -4,6 +4,7 @@
 
 #include "System.h"
 #include "Entity.h"
+#include "StackAllocator.h"
 
 #include "Transform.h"
 #include "RectangleRenderer.h"
@@ -19,6 +20,7 @@ struct EngineState
 {
     SDL_Renderer* renderer;
     SteveEngine::System* system;
+    StackAllocator* stackAllocator;
     Uint32 frameStart;
     bool quit;
     int frame;
