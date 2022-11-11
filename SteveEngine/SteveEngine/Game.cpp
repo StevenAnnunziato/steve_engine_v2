@@ -209,6 +209,10 @@ void Game::updatePhysics(EngineState* engine)
     {
         for (int j = 0; j < getWorld()->numColliders; j++)
         {
+            // don't collide with myself
+            if (&getWorld()->collider_array[i] == &getWorld()->collider_array[j])
+                continue;
+
             // are i and j colliding?
             if (getWorld()->collider_array[i].CheckCollision(&getWorld()->collider_array[j]))
             {
@@ -220,7 +224,13 @@ void Game::updatePhysics(EngineState* engine)
         }
     }
     
-    // do something with collider array!
+    // show text with frame number
+    int bufferSize = 13;  // 13 chars should be enough for "frame: xxxxxx"
+    char* frameStr = engine->stackAllocator->alloc<char>(bufferSize);
+    snprintf(frameStr, bufferSize, "Frame: %d", engine->frame);
+    puts(frameStr);
+
+    // display collider array!
     for (int i = 0; i < size; i++)
     {
         std::cout << colliderArray[i]->GetOwner()->GetTransform()->position.x << std::endl;

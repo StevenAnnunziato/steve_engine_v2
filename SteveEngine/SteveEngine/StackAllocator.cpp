@@ -7,6 +7,11 @@ StackAllocator::StackAllocator(int bufferSize)
     head = buffer;
 }
 
+StackAllocator::~StackAllocator()
+{
+    delete buffer;
+}
+
 void StackAllocator::clear()
 {
     head = buffer;

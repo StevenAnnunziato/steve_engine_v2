@@ -3,6 +3,7 @@ class StackAllocator
 {
 public:
     StackAllocator(int bufferSize);
+    ~StackAllocator();
 
     // Allocate a single piece of data
     template <typename T>
