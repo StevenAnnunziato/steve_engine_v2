@@ -54,7 +54,7 @@ void Game::initGame(const Vector2& windowSize)
     Vector3 playerPosition(200, 200, 0);
     Vector2 playerSize(50, 50);
     Color playerColor(0, 255, 255);
-    Entity* player = new Entity();
+    Entity* player = DBG_NEW Entity();
     player->SetPosition(playerPosition);
     player->CreateRenderer(playerSize, playerColor);
     player->CreateCollider(playerSize.x / 2.0, playerSize.y / 2.0);
@@ -66,7 +66,7 @@ void Game::initGame(const Vector2& windowSize)
     Vector3 obstaclePosition(windowSize.x / 2, windowSize.y / 2, 0);
     Vector2 obstacleSize(50, 200);
     Color obstacleColor(255, 0, 0);
-    Entity* obstacle = new Entity();
+    Entity* obstacle = DBG_NEW Entity();
     obstacle->SetPosition(obstaclePosition);
     obstacle->CreateRenderer(obstacleSize, obstacleColor);
     obstacle->CreateCollider(obstacleSize.x / 2.0, obstacleSize.y / 2.0);
@@ -76,7 +76,7 @@ void Game::initGame(const Vector2& windowSize)
     Vector3 bgPosition(windowSize.x / 2, windowSize.y / 2, 0);
     Vector2 bgSize(windowSize.x, windowSize.y);
     Color bgColor(255, 255, 255);
-    Entity* background = new Entity();
+    Entity* background = DBG_NEW Entity();
     background->SetPosition(bgPosition);
     background->CreateRenderer(bgSize, bgColor);
     gameEntities.push_back(background); // keep track of it
@@ -97,6 +97,7 @@ void Game::initGame(const Vector2& windowSize)
 
 void Game::cleanupGame()
 {
+    // delete all game entities
     for (int i = 0; i < gameEntities.size(); i++)
     {
         delete gameEntities[i];
@@ -108,7 +109,7 @@ void Game::cleanupGame()
 void Game::initInstance()
 {
     if (spTheGame == nullptr)
-        spTheGame = new Game();
+        spTheGame = DBG_NEW Game();
 }
 void Game::cleanupInstance()
 {
