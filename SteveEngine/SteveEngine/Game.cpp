@@ -142,7 +142,7 @@ void Game::updateGameState(void* arg)
     }
     for (int i = 0; i < getWorld()->numControllers; i++)
     {
-        getWorld()->colorchanger_array[i].Update(gameEntities[1]); // hard coded to check for the obstacle
+        getWorld()->colorchanger_array[i].Update(gameEntities);
     }
 
     // input for basic game functionality

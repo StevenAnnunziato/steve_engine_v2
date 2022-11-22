@@ -1,6 +1,7 @@
 #pragma once
 
 #include <istream>
+#include <vector>
 
 #include "Component.h"
 #include "Utils.h"
@@ -17,7 +18,7 @@ public:
 	void AutoSetBaseColor();
 	void SetHitColor(const Color& col) { hitColor = col; }
 
-	void Update(Entity* colliderToCheck);
+	void Update(std::vector<Entity*> entsToCheck);
 
 private:
 	Color baseColor;

@@ -42,7 +42,6 @@ void LevelParser::LoadLevel(EngineState* engine)
 			// read the int component ID value
 			int compID;
 			line >> compID;
-			std::cout << compID << std::endl;
 
 			// let this component load its data
 			addAndLoadComponent(ent, (ComponentID)compID, line);

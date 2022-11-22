@@ -90,6 +90,7 @@ public:
     static void initInstance();
     static void cleanupInstance();
     World* getWorld() { return &theWorld; }
+    
 
     // setup and cleanup
 	void initGame(const Vector2& size);
