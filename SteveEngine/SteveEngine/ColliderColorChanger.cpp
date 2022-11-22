@@ -19,6 +19,10 @@ ColliderColorChanger::ColliderColorChanger(Entity* pOwner, const Color& color)
 	hitColor = color;
 }
 
+void ColliderColorChanger::LoadFromFile(std::istream& file)
+{
+}
+
 void ColliderColorChanger::AutoSetBaseColor()
 {
 	baseColor = pOwner->GetRenderer()->GetColor();

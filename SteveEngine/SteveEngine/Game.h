@@ -104,6 +104,9 @@ public:
     void updatePhysics(EngineState* engine);
     void renderGame(EngineState* engine);
 
+    // additional helper functions
+    Entity* createNewEntity();
+
 private:
     static Game* spTheGame;
     std::vector<Entity*> gameEntities;

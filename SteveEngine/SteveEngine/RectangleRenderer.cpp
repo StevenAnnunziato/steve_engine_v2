@@ -16,3 +16,7 @@ RectangleRenderer::RectangleRenderer(Entity* pOwner, Vector2 size, Color color)
 	this->size = size;
 	this->color = color;
 }
+
+void RectangleRenderer::LoadFromFile(std::istream& file)
+{
+}

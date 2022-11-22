@@ -1,5 +1,7 @@
 #pragma once
 
+#include <istream>
+
 #include "Component.h"
 #include "Utils.h"
 
@@ -9,6 +11,8 @@ public:
 	RectangleCollider();
 	RectangleCollider(Entity* pOwner, float halfWidth, float halfHeight);
 	RectangleCollider(Entity* pOwner, Vector2 halfExtents);
+
+	void LoadFromFile(std::istream& file) override;
 
 	void SetHalfWidth(const float& v) { halfWidth = v; }
 	void SetHalfHeight(const float& v) { halfHeight = v; }

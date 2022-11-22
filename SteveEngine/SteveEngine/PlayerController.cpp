@@ -17,6 +17,10 @@ PlayerController::PlayerController(Entity* pOwner)
 	KEY_STATE = SDL_GetKeyboardState(nullptr);
 }
 
+void PlayerController::LoadFromFile(std::istream& file)
+{
+}
+
 void PlayerController::Update()
 {
 	// set movement speeds and other values

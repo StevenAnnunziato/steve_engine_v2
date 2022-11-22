@@ -25,6 +25,10 @@ RectangleCollider::RectangleCollider(Entity* pOwner, Vector2 halfExtents)
 	this->halfHeight = halfExtents.y;
 }
 
+void RectangleCollider::LoadFromFile(std::istream& file)
+{
+}
+
 // returns true if pOther is colliding with this collider
 // TODO: simplify the get calls here for readability
 bool RectangleCollider::CheckCollision(RectangleCollider* pOther)

@@ -15,3 +15,7 @@ Transform::Transform(Vector3 position)
 {
 	this->position = position;
 }
+
+void Transform::LoadFromFile(std::istream& file)
+{
+}

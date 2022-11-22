@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "Utils.h"
+#include "LevelParser.h"
 
 #include "PlayerController.h"
 #include "ColliderColorChanger.h"
@@ -47,10 +48,11 @@ void Game::initGame(const Vector2& windowSize)
     // create game world
     theWorld = World();
 
-    // create game entities
-    // TODO: abstract this
+    // create game entities by parsing through a text file
+    LevelParser parser;
+    parser.LoadLevel();
 
-    // player
+/*    // player
     Vector3 playerPosition(200, 200, 0);
     Vector2 playerSize(50, 50);
     Color playerColor(0, 255, 255);
@@ -80,6 +82,7 @@ void Game::initGame(const Vector2& windowSize)
     background->SetPosition(bgPosition);
     background->CreateRenderer(bgSize, bgColor);
     gameEntities.push_back(background); // keep track of it
+    */
 
     // game is here
     runMainLoop(&engine);
@@ -268,4 +271,11 @@ void Game::renderGame(EngineState* engine)
 
     // show changes
     SDL_RenderPresent(engine->renderer);
+}
+
+Entity* Game::createNewEntity()
+{
+    Entity* ent = DBG_NEW Entity();
+    gameEntities.push_back(ent);
+    return ent;
 }
