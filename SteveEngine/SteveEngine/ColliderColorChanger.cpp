@@ -21,6 +21,14 @@ ColliderColorChanger::ColliderColorChanger(Entity* pOwner, const Color& color)
 
 void ColliderColorChanger::LoadFromFile(std::istream& file)
 {
+	Color color;
+	file >> color.r;
+	file >> color.g;
+	file >> color.b;
+	this->hitColor = color;
+
+	// ignore until the next component
+	file.ignore(100, '|');
 }
 
 void ColliderColorChanger::AutoSetBaseColor()

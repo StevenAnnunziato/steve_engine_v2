@@ -19,4 +19,19 @@ RectangleRenderer::RectangleRenderer(Entity* pOwner, Vector2 size, Color color)
 
 void RectangleRenderer::LoadFromFile(std::istream& file)
 {
+	//file.ignore(100, (int)ComponentID::RectRenderer);
+	Vector2 size;
+	Color color;
+
+	file >> size.x;
+	file >> size.y;
+	file >> color.r;
+	file >> color.g;
+	file >> color.b;
+
+	this->SetSize(size);
+	this->SetColor(color);
+
+	// ignore until the next component
+	file.ignore(100, '|');
 }

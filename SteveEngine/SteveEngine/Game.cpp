@@ -50,39 +50,7 @@ void Game::initGame(const Vector2& windowSize)
 
     // create game entities by parsing through a text file
     LevelParser parser;
-    parser.LoadLevel();
-
-/*    // player
-    Vector3 playerPosition(200, 200, 0);
-    Vector2 playerSize(50, 50);
-    Color playerColor(0, 255, 255);
-    Entity* player = DBG_NEW Entity();
-    player->SetPosition(playerPosition);
-    player->CreateRenderer(playerSize, playerColor);
-    player->CreateCollider(playerSize.x / 2.0, playerSize.y / 2.0);
-    player->CreatePlayerController();
-    player->CreateColliderColorChanger(Color(0, 127, 255));
-    gameEntities.push_back(player); // keep track of it
-
-    // obstacle
-    Vector3 obstaclePosition(windowSize.x / 2, windowSize.y / 2, 0);
-    Vector2 obstacleSize(50, 200);
-    Color obstacleColor(255, 0, 0);
-    Entity* obstacle = DBG_NEW Entity();
-    obstacle->SetPosition(obstaclePosition);
-    obstacle->CreateRenderer(obstacleSize, obstacleColor);
-    obstacle->CreateCollider(obstacleSize.x / 2.0, obstacleSize.y / 2.0);
-    gameEntities.push_back(obstacle); // keep track of it
-
-    // background
-    Vector3 bgPosition(windowSize.x / 2, windowSize.y / 2, 0);
-    Vector2 bgSize(windowSize.x, windowSize.y);
-    Color bgColor(255, 255, 255);
-    Entity* background = DBG_NEW Entity();
-    background->SetPosition(bgPosition);
-    background->CreateRenderer(bgSize, bgColor);
-    gameEntities.push_back(background); // keep track of it
-    */
+    parser.LoadLevel(&engine);
 
     // game is here
     runMainLoop(&engine);
@@ -232,13 +200,13 @@ void Game::updatePhysics(EngineState* engine)
     int bufferSize = 13;  // 13 chars should be enough for "frame: xxxxxx"
     char* frameStr = engine->stackAllocator->alloc<char>(bufferSize);
     snprintf(frameStr, bufferSize, "Frame: %d", engine->frame);
-    puts(frameStr);
+    //puts(frameStr);
 
     // display collider array!
-    for (int i = 0; i < size; i++)
+    /*for (int i = 0; i < size; i++)
     {
         std::cout << colliderArray[i]->GetOwner()->GetTransform()->position.x << std::endl;
-    }
+    }*/
 }
 
 void Game::renderGame(EngineState* engine)

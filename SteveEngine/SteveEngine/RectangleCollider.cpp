@@ -27,6 +27,12 @@ RectangleCollider::RectangleCollider(Entity* pOwner, Vector2 halfExtents)
 
 void RectangleCollider::LoadFromFile(std::istream& file)
 {
+	//file.ignore(100, (int)ComponentID::RectCollider);
+	file >> this->halfWidth;
+	file >> this->halfHeight;
+
+	// ignore until the next component
+	file.ignore(100, '|');
 }
 
 // returns true if pOther is colliding with this collider

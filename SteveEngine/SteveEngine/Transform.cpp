@@ -1,6 +1,5 @@
 #include "Transform.h"
 
-
 Transform::Transform()
 {
 	position = Vector3();
@@ -18,4 +17,11 @@ Transform::Transform(Vector3 position)
 
 void Transform::LoadFromFile(std::istream& file)
 {
+	//file.ignore(100, (int)ComponentID::Transform);
+	file >> this->position.x;
+	file >> this->position.y;
+	file >> this->position.z;
+
+	// ignore until the next component
+	file.ignore(100, '|');
 }

@@ -14,3 +14,5 @@ extern HANDLE errorLogHandle;
 // string constants for errors
 const SteveEngine::string ERROR_K(L"Don't press k!!");
 const SteveEngine::string ERROR_FAILED_INIT(L"Error: Failed to init the system console.");
+const SteveEngine::string ERROR_LOAD_FILE(L"Error: loading a level data file failed.");
+const SteveEngine::string ERROR_INVALID_COMPONENT(L"Error: read an invalid component ID while reading level data from disc.");

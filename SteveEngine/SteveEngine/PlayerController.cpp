@@ -19,6 +19,10 @@ PlayerController::PlayerController(Entity* pOwner)
 
 void PlayerController::LoadFromFile(std::istream& file)
 {
+	// nothing to read here currently!
+
+	// ignore until the next component
+	file.ignore(100, '|');
 }
 
 void PlayerController::Update()

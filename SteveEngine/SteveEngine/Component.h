@@ -4,6 +4,11 @@
 
 class Entity;
 
+enum class ComponentID
+{
+	None, Transform, RectRenderer, RectCollider, PlayerController, ColliderColorChanger, NUM_IDS
+};
+
 class Component
 {
 public:

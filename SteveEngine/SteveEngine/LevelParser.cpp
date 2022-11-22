@@ -13,12 +13,14 @@ LevelParser::LevelParser()
 	registerCompFns();
 }
 
-void LevelParser::LoadLevel()
+void LevelParser::LoadLevel(EngineState* engine)
 {
 	std::ifstream inStream("level01.dat");
 
 	if (!inStream.good())
 	{
+		std::cout << "Failed to load level01.dat." << std::endl;
+		engine->system->ShowError(ERROR_LOAD_FILE);
 		return;
 	}
 
@@ -40,12 +42,10 @@ void LevelParser::LoadLevel()
 			// read the int component ID value
 			int compID;
 			line >> compID;
+			std::cout << compID << std::endl;
 
 			// let this component load its data
 			addAndLoadComponent(ent, (ComponentID)compID, line);
-
-			// ignore until the next component
-			line.ignore(100, '|');
 		}
 	}
 }
@@ -63,6 +63,12 @@ void LevelParser::registerCompFns()
 
 void LevelParser::addAndLoadComponent(Entity* ent, ComponentID compID, std::istream& file)
 {
+	// is this an invalid component index?
+	if ((int)compID <= 0 || (int)compID >= (int)ComponentID::NUM_IDS)
+	{
+		std::cout << "Error: read an invalid component ID while reading level data from disc." << std::endl;
+	}
+
 	Component* comp = compCreationMap[compID](ent);
 	comp->LoadFromFile(file);
 }

@@ -2,16 +2,12 @@
 
 #include <unordered_map>
 #include <string>
-#include <istream>
+#include <iostream>
 
 #include "Component.h"
 
 class Entity;
-
-enum class ComponentID
-{
-	None, Transform, RectRenderer, RectCollider, PlayerController, ColliderColorChanger
-};
+class EngineState;
 
 class LevelParser
 {
@@ -21,7 +17,7 @@ public:
 	// function pointer, takes an Entity* and returns a Component*
 	typedef Component* (*compFn)(Entity* ent);
 	
-	void LoadLevel();
+	void LoadLevel(EngineState* engine);
 
 	void registerCompFns();
 	void addAndLoadComponent(Entity* ent, ComponentID compID, std::istream& file);
