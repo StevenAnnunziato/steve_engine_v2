@@ -8,6 +8,8 @@
 #include "ColliderColorChanger.h"
 #include "RectangleRenderer.h"
 
+#include "bgfx/bgfx.h"
+
 Game* Game::spTheGame = nullptr;
 
 Game::Game()
@@ -29,14 +31,19 @@ void Game::initGame(const Vector2& windowSize)
 
     //int* leak = DBG_NEW int[4096]; // this gets caught and displayed in the VS debug output
 
+    // init rendering
     SDL_Init(SDL_INIT_VIDEO);
 
     window = SDL_CreateWindow("SDL2 Test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowSize.x, windowSize.y, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
+    bgfx::init();
+
+    // init stack allocator
     int bufferSize = 1024 * 10; // 10 kb
     StackAllocator stackAllocator(bufferSize);
 
+    // init engine state
     EngineState engine;
     engine.quit = false;
     engine.renderer = renderer;
@@ -57,6 +64,7 @@ void Game::initGame(const Vector2& windowSize)
 
     // cleanup
     cleanupGame();
+    bgfx::shutdown();
 
     // quit game
     SDL_DestroyRenderer(renderer);

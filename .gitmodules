@@ -1,0 +1,9 @@
+[submodule "SteveEngine/SteveEngine/include/bgfx"]
+	path = SteveEngine/SteveEngine/include/bgfx
+	url = https://github.com/bkaradzic/bgfx.git
+[submodule "SteveEngine/SteveEngine/include/bx"]
+	path = SteveEngine/SteveEngine/include/bx
+	url = https://github.com/bkaradzic/bx.git
+[submodule "SteveEngine/SteveEngine/include/bimg"]
+	path = SteveEngine/SteveEngine/include/bimg
+	url = https://github.com/bkaradzic/bimg.git
