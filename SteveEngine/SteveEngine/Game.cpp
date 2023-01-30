@@ -9,6 +9,7 @@
 #include "RectangleRenderer.h"
 
 #include "bgfx/bgfx.h"
+#include <SDL2/SDL_syswm.h>
 
 Game* Game::spTheGame = nullptr;
 
@@ -31,13 +32,40 @@ void Game::initGame(const Vector2& windowSize)
 
     //int* leak = DBG_NEW int[4096]; // this gets caught and displayed in the VS debug output
 
-    // init rendering
+    // init sdl
     SDL_Init(SDL_INIT_VIDEO);
 
-    window = SDL_CreateWindow("SDL2 Test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowSize.x, windowSize.y, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("SteveEngine3D", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowSize.x, windowSize.y, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    bgfx::init();
+    //get window information to pass along to bgfx
+    SDL_SysWMinfo wmi;
+    SDL_VERSION(&wmi.version);
+    if (!SDL_GetWindowWMInfo(window, &wmi)) {
+        // TODO: throw error
+    }
+
+    // init bgfx
+    bgfx::Init bgfxInit;
+    bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer.
+    bgfxInit.platformData.nwh = wmi.info.win.window;
+    bgfxInit.platformData.ndt = NULL;
+    bgfxInit.resolution.width = windowSize.x;
+    bgfxInit.resolution.height = windowSize.y;
+    bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
+    bgfx::init(bgfxInit);
+
+    // clear buffers
+    bgfx::reset(windowSize.x, windowSize.y, BGFX_RESET_VSYNC);
+    bgfx::setDebug(BGFX_DEBUG_TEXT /*| BGFX_DEBUG_STATS*/);
+
+    // init view window
+    bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
+    bgfx::setViewRect(0, 0, 0, windowSize.x, windowSize.y);
+
+    bgfx::touch(0);
+
+    // end init bgfx ----------
 
     // init stack allocator
     int bufferSize = 1024 * 10; // 10 kb
@@ -222,8 +250,8 @@ void Game::renderGame(EngineState* engine)
     //int x = (SDL_sinf(engine->frame / 100.0f) * 100.0f) + 200;
 
     // clear screen
-    SDL_SetRenderDrawColor(engine->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderClear(engine->renderer);
+    //SDL_SetRenderDrawColor(engine->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    //SDL_RenderClear(engine->renderer);
 
     /*
     // example: draw rect
@@ -232,7 +260,7 @@ void Game::renderGame(EngineState* engine)
     */
 
     // draw all entities
-    for (int i = gameEntities.size() - 1; i >= 0; --i)
+    /*for (int i = gameEntities.size() - 1; i >= 0; --i)
     {
         // work out windowSize and position
         Vector2 mySize = gameEntities[i]->GetRenderer()->GetSize();
@@ -243,10 +271,13 @@ void Game::renderGame(EngineState* engine)
         Color myColor = gameEntities[i]->GetRenderer()->GetColor();
         SDL_SetRenderDrawColor(engine->renderer, myColor.r, myColor.g, myColor.b, SDL_ALPHA_OPAQUE);
         SDL_RenderFillRect(engine->renderer, &rect);
-    }
+    }*/
 
     // show changes
-    SDL_RenderPresent(engine->renderer);
+    //SDL_RenderPresent(engine->renderer);
+
+    // BGFX rendering -----
+    bgfx::frame();
 }
 
 Entity* Game::createNewEntity()
