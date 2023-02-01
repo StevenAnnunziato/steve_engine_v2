@@ -1,14 +1,14 @@
+// got some help from here:
+// https://dev.to/pperon/hello-bgfx-4dka
+
 #include "Renderer.h"
 
 #include "Utils.h"
 #include <iostream>
 
-#include "System.h"
-#include <SDL2/SDL_syswm.h>
-#include "bgfx/bgfx.h"
-
 Renderer::Renderer()
 {
+
 }
 
 Renderer::~Renderer()
@@ -51,6 +51,17 @@ void Renderer::init(const Vector2& windowSize)
     bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
     bgfx::setViewRect(0, 0, 0, windowSize.x, windowSize.y);
 
+    // define how vertex data is structured 
+    bgfx::VertexLayout vertLayout;
+    vertLayout.begin()
+        .add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)        // three floats for position
+        .add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true)    // uint8 for vertex color
+        .end();
+
+    // create the vertex buffer object
+    bgfx::VertexBufferHandle vbh = bgfx::createVertexBuffer(bgfx::makeRef(cubeVertices, sizeof(cubeVertices)), vertLayout);
+    bgfx::IndexBufferHandle ibh = bgfx::createIndexBuffer(bgfx::makeRef(cubeTriList, sizeof(cubeTriList)));
+
     // add something so that BGFX renders
     bgfx::touch(0);
 }
@@ -65,6 +76,7 @@ void Renderer::cleanup()
 
 void Renderer::renderGame()
 {
+
     // show the frame
     bgfx::frame();
 }
