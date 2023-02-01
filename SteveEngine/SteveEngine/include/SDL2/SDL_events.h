@@ -159,7 +159,7 @@ typedef enum
     SDL_SENSORUPDATE = 0x1200,     /**< A sensor was updated */
 
     /* Render events */
-    SDL_RENDER_TARGETS_RESET = 0x2000, /**< The render targets have been reset and their contents need to be updated */
+    SDL_RENDER_TARGETS_RESET = 0x2000, /**< The renderGame targets have been reset and their contents need to be updated */
     SDL_RENDER_DEVICE_RESET, /**< The device has been reset and all textures need to be recreated */
 
     /* Internal events */

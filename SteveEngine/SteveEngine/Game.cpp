@@ -8,9 +8,6 @@
 #include "ColliderColorChanger.h"
 #include "RectangleRenderer.h"
 
-#include "bgfx/bgfx.h"
-#include <SDL2/SDL_syswm.h>
-
 Game* Game::spTheGame = nullptr;
 
 Game::Game()
@@ -24,48 +21,13 @@ Game::~Game()
 // TODO: Reformat to put RunMainLoop and cleanup fns in another place!
 void Game::initGame(const Vector2& windowSize)
 {
-    SDL_Window* window = NULL;
-    SDL_Renderer* renderer = NULL;
-
+    // init system
     SteveEngine::System system;
     system.Init();
 
-    //int* leak = DBG_NEW int[4096]; // this gets caught and displayed in the VS debug output
-
-    // init sdl
-    SDL_Init(SDL_INIT_VIDEO);
-
-    window = SDL_CreateWindow("SteveEngine3D", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowSize.x, windowSize.y, SDL_WINDOW_SHOWN);
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-    //get window information to pass along to bgfx
-    SDL_SysWMinfo wmi;
-    SDL_VERSION(&wmi.version);
-    if (!SDL_GetWindowWMInfo(window, &wmi)) {
-        // TODO: throw error
-    }
-
-    // init bgfx
-    bgfx::Init bgfxInit;
-    bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer.
-    bgfxInit.platformData.nwh = wmi.info.win.window;
-    bgfxInit.platformData.ndt = NULL;
-    bgfxInit.resolution.width = windowSize.x;
-    bgfxInit.resolution.height = windowSize.y;
-    bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
-    bgfx::init(bgfxInit);
-
-    // clear buffers
-    bgfx::reset(windowSize.x, windowSize.y, BGFX_RESET_VSYNC);
-    bgfx::setDebug(BGFX_DEBUG_TEXT /*| BGFX_DEBUG_STATS*/);
-
-    // init view window
-    bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
-    bgfx::setViewRect(0, 0, 0, windowSize.x, windowSize.y);
-
-    bgfx::touch(0);
-
-    // end init bgfx ----------
+    // create and init renderer
+    theRenderer = Renderer();
+    theRenderer.init(windowSize);
 
     // init stack allocator
     int bufferSize = 1024 * 10; // 10 kb
@@ -74,7 +36,6 @@ void Game::initGame(const Vector2& windowSize)
     // init engine state
     EngineState engine;
     engine.quit = false;
-    engine.renderer = renderer;
     engine.stackAllocator = &stackAllocator;
     engine.frame = 0;
     engine.frameStart = SDL_GetTicks();
@@ -92,11 +53,9 @@ void Game::initGame(const Vector2& windowSize)
 
     // cleanup
     cleanupGame();
-    bgfx::shutdown();
+    theRenderer.cleanup();
 
     // quit game
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
     SDL_Quit();
 
     system.Shutdown();
@@ -148,7 +107,7 @@ void Game::handleTiming(void* engine)
     if (now - ((EngineState*)engine)->frameStart >= 16)
     {
         updateGameState((EngineState*)engine);
-        renderGame((EngineState*)engine);
+        theRenderer.renderGame();
 
         // clear stack allocator
         ((EngineState*)engine)->stackAllocator->clear();
@@ -243,41 +202,6 @@ void Game::updatePhysics(EngineState* engine)
     {
         std::cout << colliderArray[i]->GetOwner()->GetTransform()->position.x << std::endl;
     }*/
-}
-
-void Game::renderGame(EngineState* engine)
-{
-    //int x = (SDL_sinf(engine->frame / 100.0f) * 100.0f) + 200;
-
-    // clear screen
-    //SDL_SetRenderDrawColor(engine->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-    //SDL_RenderClear(engine->renderer);
-
-    /*
-    // example: draw rect
-    SDL_SetRenderDrawColor(engine->renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderFillRect(engine->renderer, &r);
-    */
-
-    // draw all entities
-    /*for (int i = gameEntities.size() - 1; i >= 0; --i)
-    {
-        // work out windowSize and position
-        Vector2 mySize = gameEntities[i]->GetRenderer()->GetSize();
-        Vector2 myPos = (Vector2)gameEntities[i]->GetTransform()->position - (mySize / 2.0); // center the rect
-        SDL_Rect rect = { myPos.x, myPos.y, mySize.x, mySize.y };
-
-        // set color and draw
-        Color myColor = gameEntities[i]->GetRenderer()->GetColor();
-        SDL_SetRenderDrawColor(engine->renderer, myColor.r, myColor.g, myColor.b, SDL_ALPHA_OPAQUE);
-        SDL_RenderFillRect(engine->renderer, &rect);
-    }*/
-
-    // show changes
-    //SDL_RenderPresent(engine->renderer);
-
-    // BGFX rendering -----
-    bgfx::frame();
 }
 
 Entity* Game::createNewEntity()

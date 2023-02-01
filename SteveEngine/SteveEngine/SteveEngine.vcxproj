@@ -138,6 +138,7 @@
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="RectangleCollider.cpp" />
     <ClCompile Include="RectangleRenderer.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="StackAllocator.cpp" />
     <ClCompile Include="SteveEngine.cpp" />
     <ClCompile Include="System_Win32.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="RectangleCollider.h" />
     <ClInclude Include="RectangleRenderer.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="StackAllocator.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="System_Common.h" />

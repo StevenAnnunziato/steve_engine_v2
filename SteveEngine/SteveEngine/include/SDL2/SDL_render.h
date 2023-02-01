@@ -73,7 +73,7 @@ typedef enum
 } SDL_RendererFlags;
 
 /**
- * Information on the capabilities of a render driver or context.
+ * Information on the capabilities of a renderGame driver or context.
  */
 typedef struct SDL_RendererInfo
 {
@@ -112,7 +112,7 @@ typedef enum
 {
     SDL_TEXTUREACCESS_STATIC,    /**< Changes rarely, not lockable */
     SDL_TEXTUREACCESS_STREAMING, /**< Changes frequently, lockable */
-    SDL_TEXTUREACCESS_TARGET     /**< Texture can be used as a render target */
+    SDL_TEXTUREACCESS_TARGET     /**< Texture can be used as a renderGame target */
 } SDL_TextureAccess;
 
 /**
@@ -152,11 +152,11 @@ typedef struct SDL_Texture SDL_Texture;
 /**
  * Get the number of 2D rendering drivers available for the current display.
  *
- * A render driver is a set of code that handles rendering and texture
+ * A renderGame driver is a set of code that handles rendering and texture
  * management on a particular display. Normally there is only one, but some
  * drivers may have several available with different capabilities.
  *
- * There may be none if SDL was compiled without render support.
+ * There may be none if SDL was compiled without renderGame support.
  *
  * \returns a number >= 0 on success or a negative error code on failure; call
  *          SDL_GetError() for more information.
@@ -388,7 +388,7 @@ extern DECLSPEC int SDLCALL SDL_QueryTexture(SDL_Texture * texture,
                                              int *w, int *h);
 
 /**
- * Set an additional color value multiplied into render copy operations.
+ * Set an additional color value multiplied into renderGame copy operations.
  *
  * When this texture is rendered, during the copy operation each source color
  * channel is modulated by the appropriate color value according to the
@@ -416,7 +416,7 @@ extern DECLSPEC int SDLCALL SDL_SetTextureColorMod(SDL_Texture * texture,
 
 
 /**
- * Get the additional color value multiplied into render copy operations.
+ * Get the additional color value multiplied into renderGame copy operations.
  *
  * \param texture the texture to query
  * \param r a pointer filled in with the current red color value
@@ -435,7 +435,7 @@ extern DECLSPEC int SDLCALL SDL_GetTextureColorMod(SDL_Texture * texture,
                                                    Uint8 * b);
 
 /**
- * Set an additional alpha value multiplied into render copy operations.
+ * Set an additional alpha value multiplied into renderGame copy operations.
  *
  * When this texture is rendered, during the copy operation the source alpha
  * value is modulated by this alpha value according to the following formula:
@@ -459,7 +459,7 @@ extern DECLSPEC int SDLCALL SDL_SetTextureAlphaMod(SDL_Texture * texture,
                                                    Uint8 alpha);
 
 /**
- * Get the additional alpha value multiplied into render copy operations.
+ * Get the additional alpha value multiplied into renderGame copy operations.
  *
  * \param texture the texture to query
  * \param alpha a pointer filled in with the current alpha value
@@ -743,7 +743,7 @@ extern DECLSPEC int SDLCALL SDL_LockTextureToSurface(SDL_Texture *texture,
 extern DECLSPEC void SDLCALL SDL_UnlockTexture(SDL_Texture * texture);
 
 /**
- * Determine whether a renderer supports the use of render targets.
+ * Determine whether a renderer supports the use of renderGame targets.
  *
  * \param renderer the renderer that will be checked
  * \returns SDL_TRUE if supported or SDL_FALSE if not.
@@ -759,15 +759,15 @@ extern DECLSPEC SDL_bool SDLCALL SDL_RenderTargetSupported(SDL_Renderer *rendere
  *
  * Before using this function, you should check the
  * `SDL_RENDERER_TARGETTEXTURE` bit in the flags of SDL_RendererInfo to see if
- * render targets are supported.
+ * renderGame targets are supported.
  *
- * The default render target is the window for which the renderer was created.
- * To stop rendering to a texture and render to the window again, call this
+ * The default renderGame target is the window for which the renderer was created.
+ * To stop rendering to a texture and renderGame to the window again, call this
  * function with a NULL `texture`.
  *
  * \param renderer the rendering context
  * \param texture the targeted texture, which must be created with the
- *                `SDL_TEXTUREACCESS_TARGET` flag, or NULL to render to the
+ *                `SDL_TEXTUREACCESS_TARGET` flag, or NULL to renderGame to the
  *                window instead of a texture.
  * \returns 0 on success or a negative error code on failure; call
  *          SDL_GetError() for more information.
@@ -780,13 +780,13 @@ extern DECLSPEC int SDLCALL SDL_SetRenderTarget(SDL_Renderer *renderer,
                                                 SDL_Texture *texture);
 
 /**
- * Get the current render target.
+ * Get the current renderGame target.
  *
- * The default render target is the window for which the renderer was created,
+ * The default renderGame target is the window for which the renderer was created,
  * and is reported a NULL here.
  *
  * \param renderer the rendering context
- * \returns the current render target or NULL for the default render target.
+ * \returns the current renderGame target or NULL for the default renderGame target.
  *
  * \since This function is available since SDL 2.0.0.
  *
@@ -1000,7 +1000,7 @@ extern DECLSPEC void SDLCALL SDL_RenderGetScale(SDL_Renderer * renderer,
  * Get logical coordinates of point in renderer when given real coordinates of
  * point in window.
  *
- * Logical coordinates will differ from real coordinates when render is scaled
+ * Logical coordinates will differ from real coordinates when renderGame is scaled
  * and logical renderer size set
  *
  * \param renderer the renderer from which the logical coordinates should be
@@ -1026,7 +1026,7 @@ extern DECLSPEC void SDLCALL SDL_RenderWindowToLogical(SDL_Renderer * renderer,
  * Get real coordinates of point in window when given logical coordinates of
  * point in renderer.
  *
- * Logical coordinates will differ from real coordinates when render is scaled
+ * Logical coordinates will differ from real coordinates when renderGame is scaled
  * and logical renderer size set
  *
  * \param renderer the renderer from which the window coordinates should be
@@ -1695,7 +1695,7 @@ extern DECLSPEC int SDLCALL SDL_RenderGeometryRaw(SDL_Renderer *renderer,
  *
  * \param renderer the rendering context
  * \param rect an SDL_Rect structure representing the area to read, or NULL
- *             for the entire render target
+ *             for the entire renderGame target
  * \param format an SDL_PixelFormatEnum value of the desired format of the
  *               pixel data, or 0 to use the format of the rendering target
  * \param pixels a pointer to the pixel data to copy into
@@ -1781,11 +1781,11 @@ extern DECLSPEC void SDLCALL SDL_DestroyRenderer(SDL_Renderer * renderer);
  * are planning to call into OpenGL/Direct3D/Metal/whatever directly in
  * addition to using an SDL_Renderer.
  *
- * This is for a very-specific case: if you are using SDL's render API, you
+ * This is for a very-specific case: if you are using SDL's renderGame API, you
  * asked for a specific renderer backend (OpenGL, Direct3D, etc), you set
  * SDL_HINT_RENDER_BATCHING to "1", and you plan to make OpenGL/D3D/whatever
- * calls in addition to SDL render API calls. If all of this applies, you
- * should call SDL_RenderFlush() between calls to SDL's render API and the
+ * calls in addition to SDL renderGame API calls. If all of this applies, you
+ * should call SDL_RenderFlush() between calls to SDL's renderGame API and the
  * low-level API you're using in cooperation.
  *
  * In all other cases, you can ignore this function. This is only here to get
@@ -1880,9 +1880,9 @@ extern DECLSPEC void *SDLCALL SDL_RenderGetMetalLayer(SDL_Renderer * renderer);
  * headers, but it can be safely cast to an `id<MTLRenderCommandEncoder>`.
  *
  * Note that as of SDL 2.0.18, this will return NULL if Metal refuses to give
- * SDL a drawable to render to, which might happen if the window is
+ * SDL a drawable to renderGame to, which might happen if the window is
  * hidden/minimized/offscreen. This doesn't apply to command encoders for
- * render targets, just the window's backbacker. Check your return values!
+ * renderGame targets, just the window's backbacker. Check your return values!
  *
  * \param renderer The renderer to query
  * \returns an `id<MTLRenderCommandEncoder>` on success, or NULL if the

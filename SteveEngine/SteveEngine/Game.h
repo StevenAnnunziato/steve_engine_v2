@@ -5,6 +5,7 @@
 #include "System.h"
 #include "Entity.h"
 #include "StackAllocator.h"
+#include "Renderer.h"
 
 #include "Transform.h"
 #include "RectangleRenderer.h"
@@ -16,9 +17,9 @@ class Vector2;
 class Vector3;
 class Color;
 
+// TODO: Move this to Game member variables
 struct EngineState
 {
-    SDL_Renderer* renderer;
     SteveEngine::System* system;
     StackAllocator* stackAllocator;
     Uint32 frameStart;
@@ -90,7 +91,6 @@ public:
     static void initInstance();
     static void cleanupInstance();
     World* getWorld() { return &theWorld; }
-    
 
     // setup and cleanup
 	void initGame(const Vector2& size);
@@ -103,14 +103,21 @@ public:
     // updating game state
     void updateGameState(void* arg);
     void updatePhysics(EngineState* engine);
-    void renderGame(EngineState* engine);
 
     // additional helper functions
     Entity* createNewEntity();
 
 private:
+    // singleton instance of the game
     static Game* spTheGame;
+
+    // entities in the game, a.k.a. GameObjects
     std::vector<Entity*> gameEntities;
+
+    // all components in the world
     World theWorld;
+
+    // renderer
+    Renderer theRenderer;
 };
 

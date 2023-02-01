@@ -564,7 +564,7 @@ extern "C" {
  *
  * The variable can be set to the following values:
  *   "0"       - SDL_TEXTEDITING events are sent, and it is the application's
- *               responsibility to render the text from these events and 
+ *               responsibility to renderGame the text from these events and 
  *               differentiate it somehow from committed text. (default)
  *   "1"       - If supported by the IME then SDL_TEXTEDITING events are not sent, 
  *               and text that is being composed will be rendered in its own UI.
@@ -906,7 +906,7 @@ extern "C" {
  * In some cases, it can be useful to have the KMSDRM backend even if it cannot
  * be used for rendering. An app may want to use SDL for input processing while
  * using another rendering API (such as an MMAL overlay on Raspberry Pi) or
- * using its own code to render to DRM overlays that SDL doesn't support.
+ * using its own code to renderGame to DRM overlays that SDL doesn't support.
  *
  * This hint must be set before initializing the video subsystem.
  *
@@ -1211,20 +1211,20 @@ extern "C" {
 #define SDL_HINT_QTWAYLAND_WINDOW_FLAGS "SDL_QTWAYLAND_WINDOW_FLAGS"
 
 /**
- *  \brief  A variable controlling whether the 2D render API is compatible or efficient.
+ *  \brief  A variable controlling whether the 2D renderGame API is compatible or efficient.
  *
  *  This variable can be set to the following values:
  *
  *    "0"     - Don't use batching to make rendering more efficient.
  *    "1"     - Use batching, but might cause problems if app makes its own direct OpenGL calls.
  *
- *  Up to SDL 2.0.9, the render API would draw immediately when requested. Now
+ *  Up to SDL 2.0.9, the renderGame API would draw immediately when requested. Now
  *  it batches up draw requests and sends them all to the GPU only when forced
- *  to (during SDL_RenderPresent, when changing render targets, by updating a
+ *  to (during SDL_RenderPresent, when changing renderGame targets, by updating a
  *  texture that the batch needs, etc). This is significantly more efficient,
- *  but it can cause problems for apps that expect to render on top of the
- *  render API's output. As such, SDL will disable batching if a specific
- *  render backend is requested (since this might indicate that the app is
+ *  but it can cause problems for apps that expect to renderGame on top of the
+ *  renderGame API's output. As such, SDL will disable batching if a specific
+ *  renderGame backend is requested (since this might indicate that the app is
  *  planning to use the underlying graphics API directly). This hint can
  *  be used to explicitly request batching in this instance. It is a contract
  *  that you will either never use the underlying graphics API directly, or
@@ -1235,7 +1235,7 @@ extern "C" {
 #define SDL_HINT_RENDER_BATCHING  "SDL_RENDER_BATCHING"
 
 /**
- *  \brief  A variable controlling how the 2D render API renders lines
+ *  \brief  A variable controlling how the 2D renderGame API renders lines
  *
  *  This variable can be set to the following values:
  *    "0"     - Use the default line drawing method (Bresenham's line algorithm as of SDL 2.0.20)
@@ -1272,7 +1272,7 @@ extern "C" {
 #define SDL_HINT_RENDER_DIRECT3D_THREADSAFE "SDL_RENDER_DIRECT3D_THREADSAFE"
 
 /**
- *  \brief  A variable specifying which render driver to use.
+ *  \brief  A variable specifying which renderGame driver to use.
  *
  *  If the application doesn't pick a specific renderer to use, this variable
  *  specifies the name of the preferred renderer.  If the preferred renderer
@@ -1305,7 +1305,7 @@ extern "C" {
 #define SDL_HINT_RENDER_LOGICAL_SIZE_MODE       "SDL_RENDER_LOGICAL_SIZE_MODE"
 
 /**
- *  \brief  A variable controlling whether the OpenGL render driver uses shaders if they are available.
+ *  \brief  A variable controlling whether the OpenGL renderGame driver uses shaders if they are available.
  *
  *  This variable can be set to the following values:
  *    "0"       - Disable shaders
@@ -1511,7 +1511,7 @@ extern "C" {
  * \brief A variable controlling whether the EGL window is allowed to be
  * composited as transparent, rather than opaque.
  *
- * Most window systems will always render windows opaque, even if the surface
+ * Most window systems will always renderGame windows opaque, even if the surface
  * format has an alpha channel. This is not always true, however, so by default
  * SDL will try to enforce opaque composition. To override this behavior, you
  * can set this hint to "1".
